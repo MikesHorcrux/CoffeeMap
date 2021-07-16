@@ -12,7 +12,6 @@
 		5554276026A0FD0B007B7CE2 /* CoffeeMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554273726A0FD0A007B7CE2 /* CoffeeMapApp.swift */; };
 		5554276126A0FD0B007B7CE2 /* CoffeeMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554273726A0FD0A007B7CE2 /* CoffeeMapApp.swift */; };
 		5554276226A0FD0B007B7CE2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554273826A0FD0A007B7CE2 /* ContentView.swift */; };
-		5554276326A0FD0B007B7CE2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554273826A0FD0A007B7CE2 /* ContentView.swift */; };
 		5554276426A0FD0B007B7CE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5554273926A0FD0B007B7CE2 /* Assets.xcassets */; };
 		5554276526A0FD0B007B7CE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5554273926A0FD0B007B7CE2 /* Assets.xcassets */; };
 		5554277A26A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277926A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift */; };
@@ -23,6 +22,8 @@
 		5554278226A10510007B7CE2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554278026A10510007B7CE2 /* MapView.swift */; };
 		55D382F826A10BD200D78368 /* EnvironmentValues+LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277926A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift */; };
 		55D382F926A10C1200D78368 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277B26A0FDFA007B7CE2 /* LocationManager.swift */; };
+		55D382FA26A1122000D78368 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554273826A0FD0A007B7CE2 /* ContentView.swift */; };
+		55D382FD26A1132500D78368 /* LocalSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D382FB26A1132500D78368 /* LocalSearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		5554277B26A0FDFA007B7CE2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		5554277D26A1031B007B7CE2 /* LocalSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchViewModel.swift; sourceTree = "<group>"; };
 		5554278026A10510007B7CE2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		55D382FB26A1132500D78368 /* LocalSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,10 +112,9 @@
 		5554273626A0FD0A007B7CE2 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				5554273726A0FD0A007B7CE2 /* CoffeeMapApp.swift */,
 				5554277626A0FD46007B7CE2 /* Models */,
 				5554277426A0FD1D007B7CE2 /* View Models */,
-				5554273726A0FD0A007B7CE2 /* CoffeeMapApp.swift */,
-				5554273826A0FD0A007B7CE2 /* ContentView.swift */,
 				5554273926A0FD0B007B7CE2 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -178,6 +179,8 @@
 		5554277526A0FD2D007B7CE2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5554273826A0FD0A007B7CE2 /* ContentView.swift */,
+				55D382FB26A1132500D78368 /* LocalSearchView.swift */,
 				5554278026A10510007B7CE2 /* MapView.swift */,
 			);
 			path = Views;
@@ -378,11 +381,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				55D382F826A10BD200D78368 /* EnvironmentValues+LocationManager.swift in Sources */,
-				5554276326A0FD0B007B7CE2 /* ContentView.swift in Sources */,
 				55D382F926A10C1200D78368 /* LocationManager.swift in Sources */,
+				55D382FA26A1122000D78368 /* ContentView.swift in Sources */,
 				5554278226A10510007B7CE2 /* MapView.swift in Sources */,
 				5554277F26A1031B007B7CE2 /* LocalSearchViewModel.swift in Sources */,
 				5554276126A0FD0B007B7CE2 /* CoffeeMapApp.swift in Sources */,
+				55D382FD26A1132500D78368 /* LocalSearchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

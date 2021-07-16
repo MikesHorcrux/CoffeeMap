@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+
     var localSearch: LocalSearchViewModel
     var body: some View {
-        MapView(localVM: localSearch)
+        NavigationView{
+            LocalSearchView(localSearch: localSearch)
+            MapView(localVM: localSearch)
+        }
+
     }
 }
 

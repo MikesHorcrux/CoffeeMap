@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 import MapKit
+import Combine
 
 final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = LocationManagerViewModel()
@@ -76,6 +77,7 @@ final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationMana
 
 
     func selectShop(shop: Shop){
+        annotation.removeAll()
         searchedLocal = ""
         guard let coordinate = shop.shop.location?.coordinate else {
             return
@@ -85,10 +87,10 @@ final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationMana
         pointAnnotation.coordinate = coordinate
         pointAnnotation.title = shop.shop.name ?? ""
 
-        annotation = [shop]
         currentRegion = MKCoordinateRegion(center: shop.shop.location!.coordinate, latitudinalMeters: 20, longitudinalMeters: 20)
-
-        print(shop.shop.location?.coordinate.latitude)
+        let chosenShop = Shop(id: shop.id, shop: shop.shop)
+        annotation.append(chosenShop)
+        print(annotation)
     }
 }
 

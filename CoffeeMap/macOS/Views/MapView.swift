@@ -9,12 +9,12 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @Environment(\.locationManagerViewModel) private var locationManager
+    @ObservedObject var localSearch = LocalSearchViewModel()
+    @ObservedObject var LocationManager = LocationManagerViewModel()
     @State private var trackingMode = MapUserTrackingMode.follow
     @State private var region: MKCoordinateRegion = .init()
-    @State var location: [Shop] {
-        self.location = locationManager.annotation
-    }
+    @State var location: [Shop] = []
+    let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
     var body: some View {
 
         Map(
@@ -22,10 +22,11 @@ struct MapView: View {
             interactionModes: .all,
             showsUserLocation: true,
             userTrackingMode: $trackingMode,
-            annotationItems: location
+            annotationItems: LocationManager.annotation
         ){ item in
             MapAnnotation(coordinate: item.shop.location?.coordinate ?? .init()){
-                Circle()
+                Circle().frame(width: 100, height: 1000, alignment: .center)
+                    .foregroundColor(.red)
 
             }
         }

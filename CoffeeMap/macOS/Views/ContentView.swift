@@ -12,11 +12,11 @@ struct ContentView: View {
     @Environment(\.locationManagerViewModel) private var locationManager
 
     var body: some View {
-        NavigationView {
+
 
             LocalSearchView()
-            MapView()
-        }
+
+        
 
 
     }

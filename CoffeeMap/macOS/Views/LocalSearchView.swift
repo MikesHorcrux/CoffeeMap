@@ -6,49 +6,70 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct LocalSearchView: View {
     @ObservedObject var localSearch = LocalSearchViewModel()
     @ObservedObject var LocationManager = LocationManagerViewModel()
+    @State private var trackingMode = MapUserTrackingMode.follow
+    @State private var region: MKCoordinateRegion = .init()
     var body: some View {
 
-            VStack {
-                Form {
-                    Section(header: Text("Search location")) {
-                        TextField("search", text: $LocationManager.searchedLocal)
+        ZStack {
+            Map(
+                coordinateRegion: $region,
+                interactionModes: .all,
+                showsUserLocation: true,
+                userTrackingMode: $trackingMode,
+                annotationItems: LocationManager.annotation
+            ){ item in
+                MapAnnotation(coordinate: item.shop.location?.coordinate ?? .init()){
+                    Circle().frame(width: 100, height: 1000, alignment: .center)
+                        .foregroundColor(.red)
 
-                        if !LocationManager.shops.isEmpty && LocationManager.searchedLocal != "" {
-                            VStack{
-                                ScrollView{
-                                ForEach(LocationManager.shops){ shops in
-                                    VStack {
-                                        Text(shops.shop.name ?? "")
-                                        HStack {
-                                            Text(shops.shop.locality ?? "")
-                                            Text(shops.shop.postalCode ?? "")
+                }
+            }
+
+        }
+
+            VStack {
+                    Form {
+                        Section(header: Text("Search location")) {
+                            TextField("search", text: $LocationManager.searchedLocal)
+
+                            if !LocationManager.shops.isEmpty && LocationManager.searchedLocal != "" {
+                                VStack{
+                                    ScrollView{
+                                    ForEach(LocationManager.shops){ shops in
+                                        VStack {
+                                            Text(shops.shop.name ?? "")
+                                            HStack {
+                                                Text(shops.shop.locality ?? "")
+                                                Text(shops.shop.postalCode ?? "")
+                                            }
                                         }
+                                        .onTapGesture {
+                                            LocationManager.selectShop(shop: shops)
+                                        }
+                                        Divider()
                                     }
-                                    .onTapGesture {
-                                        LocationManager.selectShop(shop: shops)
-                                    }
-                                    Divider()
+                                }
                                 }
                             }
+                        }
+                        .onChange(of: LocationManager.searchedLocal) { value in
+                            let delay = 0.5
+                            DispatchQueue.main.asyncAfter(deadline: .now() + delay){
+                                if value == LocationManager.searchedLocal{
+                                    self.LocationManager.searchQuery()
+                                }
                             }
                         }
+                        Spacer()
                     }
-                    .onChange(of: LocationManager.searchedLocal) { value in
-                        let delay = 0.5
-                        DispatchQueue.main.asyncAfter(deadline: .now() + delay){
-                            if value == LocationManager.searchedLocal{
-                                self.LocationManager.searchQuery()
-                            }
-                        }
-                    }
-                    Spacer()
-                }
-                .frame(width: nil, height: 300, alignment: .center)
-            
+                    .frame(width: nil, height: 300, alignment: .center)
+
+            }
         }
 //        VStack {
 //            Form {
@@ -85,7 +106,7 @@ struct LocalSearchView: View {
 //                }
 //            }
 //        }
-    }
+    
 }
 
 struct LocalSearchView_Previews: PreviewProvider {

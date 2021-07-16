@@ -9,18 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
 
-    var localSearch: LocalSearchViewModel
+    @Environment(\.locationManagerViewModel) private var locationManager
+
     var body: some View {
-        NavigationView{
-            LocalSearchView(localSearch: localSearch)
-            MapView(localVM: localSearch)
+        NavigationView {
+
+            LocalSearchView()
+            MapView()
         }
+
 
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(localSearch: LocalSearchViewModel())
+        ContentView()
     }
 }

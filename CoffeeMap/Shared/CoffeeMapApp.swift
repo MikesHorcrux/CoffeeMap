@@ -14,7 +14,7 @@ struct CoffeeMapApp: App {
     @Environment(\.locationManagerViewModel) private var locationManager
     var body: some Scene {
         WindowGroup {
-            ContentView(localSearch: localSearch)
+            ContentView()
                 .onAppear(perform: {
                     locationManager.start()
                 })

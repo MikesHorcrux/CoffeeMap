@@ -7,11 +7,16 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = LocationManagerViewModel()
 
     @Published var currentLocation: CLLocation?
+    @Published var currentRegion: MKCoordinateRegion?
+    @Published var searchedLocal: String = ""
+    @Published var shops: [Shop] = []
+    @Published var annotation: [Shop] = []
     var invalidPermission = false
 
     private let manager = CLLocationManager()
@@ -52,6 +57,39 @@ final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationMana
             manager.requestWhenInUseAuthorization()
         }
     }
+
+    func searchQuery(){
+        shops.removeAll()
+        
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = searchedLocal
+
+        // fetch
+        MKLocalSearch(request: request).start { (response, _) in
+            guard let result = response else { return }
+
+            self.shops = result.mapItems.compactMap({ (item) -> Shop? in
+                return Shop(shop: item.placemark)
+            })
+        }
+    }
+
+
+    func selectShop(shop: Shop){
+        searchedLocal = ""
+        guard let coordinate = shop.shop.location?.coordinate else {
+            return
+        }
+
+        let pointAnnotation = MKPointAnnotation()
+        pointAnnotation.coordinate = coordinate
+        pointAnnotation.title = shop.shop.name ?? ""
+
+        annotation = [shop]
+        currentRegion = MKCoordinateRegion(center: shop.shop.location!.coordinate, latitudinalMeters: 20, longitudinalMeters: 20)
+
+        print(shop.shop.location?.coordinate.latitude)
+    }
 }
 
 extension LocationManagerViewModel {
@@ -75,5 +113,7 @@ extension LocationManagerViewModel {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
+        currentRegion = MKCoordinateRegion(center: currentLocation?.coordinate ?? .init(), latitudinalMeters: 1000, longitudinalMeters: 1000)
+
     }
 }

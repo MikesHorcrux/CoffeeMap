@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct CoffeeMapApp: App {
+
+    @Environment(\.localSearchViewModel) private var localSearch
+    @Environment(\.locationManagerViewModel) private var locationManager
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(localSearch: localSearch)
+                .onAppear(perform: {
+                    locationManager.start()
+                })
         }
     }
 }

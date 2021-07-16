@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    var localSearch: LocalSearchViewModel
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        MapView(localVM: localSearch)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(localSearch: LocalSearchViewModel())
     }
 }

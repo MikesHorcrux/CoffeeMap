@@ -17,6 +17,12 @@
 		5554276526A0FD0B007B7CE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5554273926A0FD0B007B7CE2 /* Assets.xcassets */; };
 		5554277A26A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277926A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift */; };
 		5554277C26A0FDFA007B7CE2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277B26A0FDFA007B7CE2 /* LocationManager.swift */; };
+		5554277E26A1031B007B7CE2 /* LocalSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277D26A1031B007B7CE2 /* LocalSearchViewModel.swift */; };
+		5554277F26A1031B007B7CE2 /* LocalSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277D26A1031B007B7CE2 /* LocalSearchViewModel.swift */; };
+		5554278126A10510007B7CE2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554278026A10510007B7CE2 /* MapView.swift */; };
+		5554278226A10510007B7CE2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554278026A10510007B7CE2 /* MapView.swift */; };
+		55D382F826A10BD200D78368 /* EnvironmentValues+LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277926A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift */; };
+		55D382F926A10C1200D78368 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554277B26A0FDFA007B7CE2 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,8 @@
 		5554275F26A0FD0B007B7CE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5554277926A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+LocationManager.swift"; sourceTree = "<group>"; };
 		5554277B26A0FDFA007B7CE2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		5554277D26A1031B007B7CE2 /* LocalSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchViewModel.swift; sourceTree = "<group>"; };
+		5554278026A10510007B7CE2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +178,7 @@
 		5554277526A0FD2D007B7CE2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5554278026A10510007B7CE2 /* MapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,6 +202,7 @@
 			children = (
 				5554277926A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift */,
 				5554277B26A0FDFA007B7CE2 /* LocationManager.swift */,
+				5554277D26A1031B007B7CE2 /* LocalSearchViewModel.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -355,8 +365,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5554277C26A0FDFA007B7CE2 /* LocationManager.swift in Sources */,
+				5554278126A10510007B7CE2 /* MapView.swift in Sources */,
 				5554276226A0FD0B007B7CE2 /* ContentView.swift in Sources */,
 				5554277A26A0FD97007B7CE2 /* EnvironmentValues+LocationManager.swift in Sources */,
+				5554277E26A1031B007B7CE2 /* LocalSearchViewModel.swift in Sources */,
 				5554276026A0FD0B007B7CE2 /* CoffeeMapApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,7 +377,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D382F826A10BD200D78368 /* EnvironmentValues+LocationManager.swift in Sources */,
 				5554276326A0FD0B007B7CE2 /* ContentView.swift in Sources */,
+				55D382F926A10C1200D78368 /* LocationManager.swift in Sources */,
+				5554278226A10510007B7CE2 /* MapView.swift in Sources */,
+				5554277F26A1031B007B7CE2 /* LocalSearchViewModel.swift in Sources */,
 				5554276126A0FD0B007B7CE2 /* CoffeeMapApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

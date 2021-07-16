@@ -8,8 +8,8 @@
 import Foundation
 import CoreLocation
 
-final class LocationManager: NSObject, ObservableObject {
-    static let shared = LocationManager()
+final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared = LocationManagerViewModel()
 
     @Published var currentLocation: CLLocation?
     var invalidPermission = false
@@ -24,7 +24,13 @@ final class LocationManager: NSObject, ObservableObject {
 
     var isAuthorized: Bool {
         let status = manager.authorizationStatus
+        #if os(iOS)
         return status == .authorizedAlways || status == .authorizedWhenInUse
+        #endif
+
+        #if os(macOS)
+        return status == .authorizedAlways || status == .authorized
+        #endif
     }
 
     var isUnAuthorized: Bool {
@@ -48,7 +54,7 @@ final class LocationManager: NSObject, ObservableObject {
     }
 }
 
-extension GPS: CLLocationManagerDelegate {
+extension LocationManagerViewModel {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if isAuthorized {
             manager.startUpdatingLocation()

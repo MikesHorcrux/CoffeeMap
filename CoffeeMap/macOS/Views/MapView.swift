@@ -9,8 +9,8 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    @ObservedObject var localSearch = LocalSearchViewModel()
-    @ObservedObject var LocationManager = LocationManagerViewModel()
+    @StateObject var localSearch = LocalSearchViewModel()
+    @StateObject var LocationManager = LocationManagerViewModel()
     @State private var trackingMode = MapUserTrackingMode.follow
     @State private var region: MKCoordinateRegion = .init()
     @State var location: [Shop] = []
@@ -22,7 +22,7 @@ struct MapView: View {
             interactionModes: .all,
             showsUserLocation: true,
             userTrackingMode: $trackingMode,
-            annotationItems: LocationManager.annotation
+            annotationItems: LocationManager.state.annotation
         ){ item in
             MapAnnotation(coordinate: item.shop.location?.coordinate ?? .init()){
                 Circle().frame(width: 100, height: 1000, alignment: .center)

@@ -9,38 +9,22 @@ import SwiftUI
 import MapKit
 
 struct LocalSearchView: View {
-    @ObservedObject var localSearch = LocalSearchViewModel()
-    @ObservedObject var LocationManager = LocationManagerViewModel()
+    @StateObject var localSearch = LocalSearchViewModel()
+    @StateObject var LocationManager = LocationManagerViewModel()
     @State private var trackingMode = MapUserTrackingMode.follow
     @State private var region: MKCoordinateRegion = .init()
     var body: some View {
-
-        ZStack {
-            Map(
-                coordinateRegion: $region,
-                interactionModes: .all,
-                showsUserLocation: true,
-                userTrackingMode: $trackingMode,
-                annotationItems: LocationManager.annotation
-            ){ item in
-                MapAnnotation(coordinate: item.shop.location?.coordinate ?? .init()){
-                    Circle().frame(width: 100, height: 1000, alignment: .center)
-                        .foregroundColor(.red)
-
-                }
-            }
-
-        }
+        NavigationView{
 
             VStack {
                     Form {
                         Section(header: Text("Search location")) {
-                            TextField("search", text: $LocationManager.searchedLocal)
+                            TextField("search", text: $LocationManager.state.searchedLocal)
 
-                            if !LocationManager.shops.isEmpty && LocationManager.searchedLocal != "" {
+                            if !LocationManager.state.shops.isEmpty && LocationManager.state.searchedLocal != "" {
                                 VStack{
                                     ScrollView{
-                                    ForEach(LocationManager.shops){ shops in
+                                        ForEach(LocationManager.state.shops){ shops in
                                         VStack {
                                             Text(shops.shop.name ?? "")
                                             HStack {
@@ -57,20 +41,41 @@ struct LocalSearchView: View {
                                 }
                             }
                         }
-                        .onChange(of: LocationManager.searchedLocal) { value in
-                            let delay = 0.5
-                            DispatchQueue.main.asyncAfter(deadline: .now() + delay){
-                                if value == LocationManager.searchedLocal{
-                                    self.LocationManager.searchQuery()
-                                }
-                            }
-                        }
-                        Spacer()
-                    }
                     .frame(width: nil, height: 300, alignment: .center)
+Spacer()
+            }
+
+
+        }
+            .onChange(of: self.LocationManager.state.searchedLocal) { value in
+                let delay = 0.5
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay){
+                    if value == self.LocationManager.state.searchedLocal{
+                        self.LocationManager.searchQuery()
+                    }
+                }
+            }
+
+
+            if LocationManager.state.annotation != [] {
+        Map(
+            coordinateRegion: $LocationManager.state.currentRegion,
+            interactionModes: .all,
+            showsUserLocation: true,
+            userTrackingMode: $trackingMode,
+            annotationItems: LocationManager.state.annotation
+        ){ item in
+            MapAnnotation(coordinate: item.shop.location?.coordinate ?? .init()){
+                Circle().frame(width: 100, height: 1000, alignment: .center)
+                    .foregroundColor(.red)
 
             }
         }
+
+        }
+
+        }
+    }
 //        VStack {
 //            Form {
 //                Section(header: Text("Location Search")) {
@@ -106,7 +111,7 @@ struct LocalSearchView: View {
 //                }
 //            }
 //        }
-    
+
 }
 
 struct LocalSearchView_Previews: PreviewProvider {

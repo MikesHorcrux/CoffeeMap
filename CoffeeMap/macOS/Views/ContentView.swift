@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-
+    @StateObject var localSearch = LocalSearchViewModel()
+    @StateObject var LocationManager = LocationManagerViewModel()
     @Environment(\.locationManagerViewModel) private var locationManager
 
     var body: some View {
 
-
+        NavigationView{
             LocalSearchView()
+            MapView()
+        }
+
 
         
 

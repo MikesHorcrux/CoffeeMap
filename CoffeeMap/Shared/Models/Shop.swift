@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-struct Shop: Identifiable {
+struct Shop: Identifiable, Equatable {
     var id = UUID().uuidString
     var shop: CLPlacemark
 }

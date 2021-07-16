@@ -11,14 +11,16 @@ import MapKit
 import Combine
 
 final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+    
     static let shared = LocationManagerViewModel()
-
-    @Published var currentLocation: CLLocation?
-    @Published var currentRegion: MKCoordinateRegion?
-    @Published var searchedLocal: String = ""
-    @Published var shops: [Shop] = []
-    @Published var annotation: [Shop] = []
-    var invalidPermission = false
+    @Published var state = LocationState()
+//
+//    @Published var currentLocation: CLLocation?
+//    @Published var currentRegion: MKCoordinateRegion?
+//    @Published var searchedLocal: String = ""
+//    @Published var shops: [Shop] = []
+//    @Published var annotation: [Shop] = []
+//    var invalidPermission = false
 
     private let manager = CLLocationManager()
 
@@ -53,23 +55,23 @@ final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationMana
         if isAuthorized {
             manager.startUpdatingLocation()
         } else if isUnAuthorized {
-            invalidPermission = true
+            state.invalidPermission = true
         } else {
             manager.requestWhenInUseAuthorization()
         }
     }
 
     func searchQuery(){
-        shops.removeAll()
+        state.shops.removeAll()
         
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = searchedLocal
+        request.naturalLanguageQuery = state.searchedLocal
 
         // fetch
         MKLocalSearch(request: request).start { (response, _) in
             guard let result = response else { return }
 
-            self.shops = result.mapItems.compactMap({ (item) -> Shop? in
+            self.state.shops = result.mapItems.compactMap({ (item) -> Shop? in
                 return Shop(shop: item.placemark)
             })
         }
@@ -77,8 +79,8 @@ final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationMana
 
 
     func selectShop(shop: Shop){
-        annotation.removeAll()
-        searchedLocal = ""
+        state.annotation.removeAll()
+        state.searchedLocal = ""
         guard let coordinate = shop.shop.location?.coordinate else {
             return
         }
@@ -87,10 +89,10 @@ final class LocationManagerViewModel: NSObject, ObservableObject, CLLocationMana
         pointAnnotation.coordinate = coordinate
         pointAnnotation.title = shop.shop.name ?? ""
 
-        currentRegion = MKCoordinateRegion(center: shop.shop.location!.coordinate, latitudinalMeters: 20, longitudinalMeters: 20)
+        state.currentRegion = MKCoordinateRegion(center: shop.shop.location!.coordinate, latitudinalMeters: 20, longitudinalMeters: 20)
         let chosenShop = Shop(id: shop.id, shop: shop.shop)
-        annotation.append(chosenShop)
-        print(annotation)
+        state.annotation.append(chosenShop)
+        print(state.annotation)
     }
 }
 
@@ -114,8 +116,8 @@ extension LocationManagerViewModel {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.last
-        currentRegion = MKCoordinateRegion(center: currentLocation?.coordinate ?? .init(), latitudinalMeters: 1000, longitudinalMeters: 1000)
+        state.currentLocation = locations.last
+        state.currentRegion = MKCoordinateRegion(center: state.currentLocation?.coordinate ?? .init(), latitudinalMeters: 1000, longitudinalMeters: 1000)
 
     }
 }
